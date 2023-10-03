@@ -1,0 +1,7 @@
+SELECT
+  DISTINCT CAST(id_pessoa AS STRING) id_pessoa,
+  nr_cpf,
+  FIRST_VALUE(prob) OVER (PARTITION BY id_pessoa ORDER BY data_ultima_atualizacao DESC) prob,
+  FIRST_VALUE(LEFT(classe, 1)) OVER (PARTITION BY id_pessoa ORDER BY data_ultima_atualizacao DESC) classe
+FROM
+  `kroton-analytics.data_etl_midia.TB_STG_MODELO_PROPENSAO_FULL'
